@@ -7,8 +7,8 @@ function App() {
     <Router>
       <main>
         <Switch>
-          <Route exact path='/'> <Videos /> </Route>
-          <Route exact path='/record-video'> <RecordVideo /> </Route>
+          <Route exact path='/crazy'> <Videos /> </Route>
+          <Route exact path='/crazy/record-video'> <RecordVideo /> </Route>
         </Switch>
       </main>
     </Router>
