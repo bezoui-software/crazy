@@ -20,7 +20,7 @@ function RecordVideo() {
     setMediaRecorder(new MediaRecorder(stream, {mimeType: 'video/webm'}));
   }
 
-  const streamingVideoError = err => throw new Error(`STREAMING ERROR : ${err}`);
+  const streamingVideoError = err => throw new Error('STREAMING ERROR :' + err);
  
 
   const flipCamera = () => setFrontCam(!frontCam);
