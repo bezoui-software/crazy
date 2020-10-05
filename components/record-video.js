@@ -226,8 +226,8 @@ function AbortVideoUploading({ abortVideoUploading }) {
 
 function RecordButton({ startRecording, pauseRecording }) {
   return (
-    <div id='record-video-btn-container'>
-      <div id='record-video-btn' onMouseDown={ startRecording } onMouseUp={ pauseRecording }></div>
+    <div id='record-video-btn-container' onMouseDown={ startRecording } onMouseUp={ pauseRecording }>
+      <div id='record-video-btn'></div>
     </div>
   )
 }
