@@ -206,7 +206,7 @@ function RecordVideoBottomBar({ recordingState, setRecordingState, uploadTask, u
 function RecordVideoTopBar({ resetAll, flipCamera }) {
   return (
     <div id='record-video-top-bar' className='record-video-bar'>
-      <Link to='/' id='close-btn' className='material-icons record-video-top-bar-icon'> close </Link>
+      <Link to='/crazy' id='close-btn' className='material-icons record-video-top-bar-icon'> close </Link>
       <div id='flip-camera-btn' className='material-icons record-video-top-bar-icon' onClick={ flipCamera }> flip_camera_android </div>
       <div id='flip-camera-btn' className='material-icons record-video-top-bar-icon' onClick={ resetAll }> delete_outline </div>
     </div>
