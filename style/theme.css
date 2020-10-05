@@ -162,11 +162,10 @@ video:active ~ .video-sidebar-container {
 }
 
 @media only screen and (max-width: 800px) {
-#videos-container, #record-video-container {
-  width: 100%;
-  height: 100%;
-  background: white;
-  border-radius: 0;
-  border: none;
-}
+  #videos-container, #record-video-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+  }
 }
