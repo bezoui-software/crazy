@@ -21,7 +21,7 @@ main {
   position: relative;
   width: 35%;
   height: 90%;
-  background: white;
+  background: black;
   border-radius: 30px;
   border: 1px solid grey;
 }
