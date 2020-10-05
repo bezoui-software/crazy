@@ -119,7 +119,7 @@ meter::-webkit-meter-optimum-value {
 .record-video-bar {
   display: flex;
   align-items: center;
-  position: fixed;
+  position: absolute;
   padding: 12px;
   gap: 5px;
   z-index: 9999999999;
