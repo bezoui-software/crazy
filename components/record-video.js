@@ -157,7 +157,7 @@ function RecordVideo() {
 
   useEffect(() => {
    const options = {
-                     facingMode: frontCam ? exact: 'environment'
+                     facingMode: frontCam ? 'exact': 'environment'
                    } 
     navigator.getUserMedia( {video: { width: 1280, height: 720 }, audio: true, options}, startStreamingVideo, streamingVideoError);
   }, [frontCam])
