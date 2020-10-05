@@ -1,0 +1,160 @@
+* {
+  color: white;
+}
+
+#record-video-container {
+  display: grid;
+  place-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.record-video-top-bar-icon {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.record-video-top-bar-icon:hover {
+  background: #e4e4e4c7;
+}
+
+#video-stream {
+  pointer-events: none; 
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+}
+
+#post-btn {
+
+}
+
+#abort-video-uploading-btn {
+  color: red;
+  border: 2px solid red;
+}
+
+#abort-video-uploading-btn:hover {
+  color: white;
+  background: red;
+}
+
+.icon-btn {
+  width: 25px;
+  height: 25px;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  border-radius: 50%;
+  padding: 5px;
+  transition: 0.3s;
+  display: grid;
+  cursor: not-allowed;
+  filter: brightness(0.9);
+  place-content: center;
+}
+
+.icon-btn:hover {
+  background: white;
+  color: black;
+}
+
+.disabled-btn {
+  cursor: not-allowed !important;
+  filter: brightness(0.9);
+  opacity: 0.9;
+}
+
+.enabled-btn {
+  cursor: pointer !important;
+  filter: brightness(1) !important;
+  opacity: 1;
+}
+
+#record-video-btn-container {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: transparent;
+  border: 3px solid white;
+  display: grid;
+  place-content: center;
+}
+
+#record-video-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: white;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.recording-btn {
+  background: #e60505 !important;
+  cursor: pointer;
+  transform: scale(0.8);
+}
+
+#uploading-video-progress {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 10px;
+  background: white;
+}
+
+meter::-webkit-meter-optimum-value {
+  background: #2e00e6; 
+  margin: 0;
+  border: 0;
+  outline: none;
+}
+
+.record-video-bar {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  padding: 12px;
+  gap: 5px;
+  z-index: 9999999999;
+}
+
+#record-video-bottom-bar {
+  justify-content: space-around;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+#record-video-top-bar {
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+
+@keyframes uploading-video-progress-meter-fadeout {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes uploading-video-progress-meter-fadeout {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+}
