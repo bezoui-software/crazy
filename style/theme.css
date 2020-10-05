@@ -17,6 +17,10 @@ main {
   overflow: hidden;
 }
 
+.material-icons {
+  user-select: none;
+}
+
 #videos-container, #record-video-container {
   position: relative;
   width: 35%;
