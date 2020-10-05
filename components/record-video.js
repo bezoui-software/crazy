@@ -157,9 +157,8 @@ function RecordVideo() {
 }
 
 function RecordVideoBottomBar({ recordingState, setRecordingState, uploadTask, uploadingVideoProgress, uploadingState }) {
-  const abortVideoUploading = () => if (uploadingVideoProgress > 0 && uploadingVideoProgress < 100) uploadTask.cancel();
-
-
+  const abortVideoUploading = () => { if (uploadingVideoProgress > 0 && uploadingVideoProgress < 100) uploadTask.cancel(); }
+  
   const startRecording = () => {
     if (uploadingState) return;
     document.getElementById('record-video-btn').classList.add('recording-btn');
