@@ -20,30 +20,25 @@ function RecordVideo() {
     setMediaRecorder(new MediaRecorder(stream, {mimeType: 'video/webm'}));
   }
 
-  const streamingVideoError = err => {
-    console.log('STREAMING ERROR : ', err);
-  }
+  const streamingVideoError = err => throw new Error(`STREAMING ERROR : ${err}`);
+ 
 
-  const flipCamera = () => {
-    setFrontCam(!frontCam);
-  }
-
+  const flipCamera = () => setFrontCam(!frontCam);
+ 
   const uploadPost = () => {
-    if (uploadedVideoSrc) {
-      const postData = {};
-      postData.userName = 'walidbez';
-      postData.description = prompt('VIDEO DESCRIPTION:');
-      postData.musicName = 'ORIGINAL SONG';
-      postData.videoSrc = uploadedVideoSrc;
-      postData.timestamp = firebase.firestore.Timestamp.fromDate(new Date());
-      database.ref('posts').push(postData);
-      setUploadingState(false);
-    }
+    if (!uploadedVideoSrc) return;
+    const postData = {};
+    postData.userName = 'walidbez';
+    postData.description = prompt('VIDEO DESCRIPTION:');
+    postData.musicName = 'ORIGINAL SONG FROM @walidbez';
+    postData.videoSrc = uploadedVideoSrc;
+    postData.timestamp = firebase.firestore.Timestamp.fromDate(new Date());
+    database.ref('posts').push(postData);
+    setUploadingState(false);
   }
 
   const uploadSelectedVideo = () => {
     if (!selectedVideo || uploadingState) return;
-    
     const id =  randomID();
     const filename = `${id}-${new Date()}`;
     let storageRef = firebase.storage().ref('/user-videos/' + filename); 
@@ -70,13 +65,10 @@ function RecordVideo() {
     uploadComplete();
   }
 
-  const resetRecordedChunks = () => {
-    setRecordedChunks();
-  }
+  const resetRecordedChunks = () => setRecordedChunks();
 
-  const resetSelectedVideo = () => {
-    setSelectedVideo();
-  }
+
+  const resetSelectedVideo = () => setSelectedVideo();
 
   const resetAll = () => {
     resetRecordedChunks();
@@ -90,7 +82,6 @@ function RecordVideo() {
   }
 
   useEffect(() => {
-    console.log(recordingState);
     switch(recordingState) {
 
       case 'start':
@@ -117,11 +108,10 @@ function RecordVideo() {
   }, [recordingState])
  
   useEffect(() => {
-    if (mediaRecorder) {
-      let recordedChunks = [];
-      mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
-      mediaRecorder.onstop = () => setRecordedChunks(recordedChunks);
-    }
+    if (!mediaRecorder) return;
+    let recordedChunks = [];
+    mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
+    mediaRecorder.onstop = () => setRecordedChunks(recordedChunks);
   }, [mediaRecorder])
 
   useEffect(() => {
@@ -131,33 +121,28 @@ function RecordVideo() {
 
   useEffect(() => {
     if (!uploadTask) return;
-
-    uploadTask.on('state_changed', function(snapshot){
+    uploadTask.on('state_changed', snapshot => {
+      // UPLOADING STILL IN PROGRESS
       var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       setUploadingVideoProgress(progress);
-    }, function(error) {
+    }, error => {
+      //UPLOADING ERROR
       if (error.code == 'storage/canceled') uploadAborted();
-    }, function() {
+    }, () => {
+      //UPLOADING COMPLETE
       uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => { setUploadedVideoSrc(downloadURL) });
     });
-
     setUploadingState(true);
   }, [uploadTask])
 
-  useEffect(() => {
-    uploadSelectedVideo();
-  }, [selectedVideo])
+  useEffect(() => { uploadSelectedVideo(); }, [selectedVideo])
+
+  useEffect(() => { (uploadingVideoProgress < 100) ? uploadNotComplete() : uploadComplete(); }, [uploadingVideoProgress])
+
+  useEffect(() => { uploadPost(); }, [uploadedVideoSrc])
 
   useEffect(() => {
-    (uploadingVideoProgress < 100) ? uploadNotComplete() : uploadComplete();
-  }, [uploadingVideoProgress])
-
-  useEffect(() => {
-    uploadPost();
-  }, [uploadedVideoSrc])
-
-  useEffect(() => {
-   const facingMode = frontCam ? 'exact': 'environment';
+    const facingMode = frontCam ? 'exact': 'environment';
     navigator.getUserMedia( {video: { width: 1280, height: 720, facingMode: facingMode}, audio: true}, startStreamingVideo, streamingVideoError);
   }, [frontCam])
 
@@ -172,9 +157,8 @@ function RecordVideo() {
 }
 
 function RecordVideoBottomBar({ recordingState, setRecordingState, uploadTask, uploadingVideoProgress, uploadingState }) {
-  const abortVideoUploading = () => {
-    if (uploadingVideoProgress > 0 && uploadingVideoProgress < 100) uploadTask.cancel();
-  }
+  const abortVideoUploading = () => if (uploadingVideoProgress > 0 && uploadingVideoProgress < 100) uploadTask.cancel();
+
 
   const startRecording = () => {
     if (uploadingState) return;
