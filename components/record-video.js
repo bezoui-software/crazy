@@ -90,6 +90,7 @@ function RecordVideo() {
   }
 
   useEffect(() => {
+    console.log(recordingState);
     switch(recordingState) {
 
       case 'start':
