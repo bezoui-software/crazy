@@ -158,3 +158,9 @@ meter::-webkit-meter-optimum-value {
     transform: translateY(100%);
   }
 }
+
+@media only screen and (max-width: 800px) {
+  #uploading-video-progress {
+    position: fixed;
+  }
+}
