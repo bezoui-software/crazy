@@ -41,7 +41,7 @@ function VideoSidebar({ videoRef, isVideoPlaying, playVideo, pauseVideo }) {
       <div id='like-video-icon-toggle' className='video-sidebar-toggle-icon material-icons' onClick={ toggleLikeVideo } > { likeVideoToggleIcon } </div>
       <div id='share-video-icon-toggle' className='video-sidebar-toggle-icon material-icons'> share </div>
       <div id='mute-icon-toggle' className='video-sidebar-toggle-icon material-icons' onClick={ toggleVideoMute  } > { muteToggleIcon } </div>
-      <Link to='/record-video'> <div id='record-video-icon-toggle' className='video-sidebar-toggle-icon material-icons'> video_call </div> </Link>
+      <Link to='/crazy/record-video'> <div id='record-video-icon-toggle' className='video-sidebar-toggle-icon material-icons'> video_call </div> </Link>
     </div>
   )
 }
