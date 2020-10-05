@@ -163,4 +163,12 @@ meter::-webkit-meter-optimum-value {
   #uploading-video-progress {
     position: fixed;
   }
+  
+  .record-video-top-bar-icon:hover {
+    background: transparent;
+  }
+  
+  .record-video-top-bar-icon:active {
+    background: #e4e4e4c7;
+  }
 }
