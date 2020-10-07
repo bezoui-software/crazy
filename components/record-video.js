@@ -21,8 +21,7 @@ function RecordVideo() {
   const streamingVideoError = err => { throw new Error(`STREAMING ERROR : ${err}`); }
  
   const flipCamera = () => {
-    console.log(recordingState);
-    if (recordingState == 'reset' || recordingState == 'stop') setFrontCam(!frontCam);
+    if (recordingState == 'reset' || recordingState == 'stop' || !recordingState) setFrontCam(!frontCam);
   }
  
   const uploadPost = () => {
@@ -115,7 +114,7 @@ function RecordVideo() {
 
   useEffect(() => {
     if (recordedChunks && recordingState == 'stop') createSelectedVideo();
-    resetRecordedChunks();
+    resetAll();
   }, [recordedChunks])
 
   useEffect(() => {
