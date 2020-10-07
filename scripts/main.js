@@ -5,9 +5,9 @@ window.oncontextmenu = function(event) {
 };
 
 var keyDownHandler = function(evt) {
-  if (evt.key === 'VolumeDown') {
+  if (evt.key === 'AudioVolumeDown') {
     alert('volume down');
-  } else if (evt.key === 'VolumeUp') {
+  } else if (evt.key === 'AudioVolumeUp') {
     alert('volume uo');
   }
   evt.preventDefault(); // to stop system app from processing keydown event
