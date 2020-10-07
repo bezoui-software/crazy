@@ -92,42 +92,43 @@ function RecordVideo() {
   }
   
   const startRecording = () => {
-    mediaRecorder.start();
+    if (mediaRecorder.state == 'inactive') mediaRecorder.start();
   }
   
   const resumeRecording = () => {
-    mediaRecorder.resume();
+    if (mediaRecorder.state == 'paused') mediaRecorder.resume();
   }
   
   const stopRecording = () => {
-    mediaRecorder.stop();
+    if (mediaRecorder.state == 'recording' || mediaRecorder.state == 'paused') mediaRecorder.stop();
   }
   
   const pauseRecording = () => {
-    mediaRecorder.pause();
+    if (mediaRecorder.state == 'recording')  mediaRecorder.pause();
   }
   
   useEffect(() => {
+    console.log(recordingState);
     switch(recordingState) {
 
       case 'start':
-        if (mediaRecorder.state == 'inactive') startRecording();
+        startRecording();
         break;
 
       case 'resume':
-        if (mediaRecorder.state == 'paused') resumeRecording();
+        resumeRecording();
         break;
 
       case 'stop':
-        if (mediaRecorder.state == 'recording' || mediaRecorder.state == 'paused') stopRecording();
+        stopRecording();
         break;
 
       case 'pause':
-        if (mediaRecorder.state == 'recording') pauseRecording();
+        pauseRecording();
         break;
 
       case 'reset':
-        if (mediaRecorder.state == 'recording' || mediaRecorder.state == 'paused') stopRecording();
+        stopRecording();
         break;
 
     }
