@@ -73,7 +73,7 @@ function RecordVideo() {
     console.log('ok ra-begin');
     resetRecordedChunks();
     resetSelectedVideo();
-    //setRecordingState('reset');
+    setRecordingState('reset');
     setUploadingState(false);
     console.log('ok ra-end');
   }
@@ -85,6 +85,7 @@ function RecordVideo() {
   }
 
   useEffect(() => {
+    console.log(recordingState);
     switch(recordingState) {
 
       case 'start':
@@ -108,6 +109,7 @@ function RecordVideo() {
         break;
 
     }
+    console.log(recordingState);
   }, [recordingState])
  
   useEffect(() => {
@@ -118,6 +120,7 @@ function RecordVideo() {
   }, [mediaRecorder])
 
   useEffect(() => {
+    console.log(recordedChunks);
     if (recordedChunks && recordingState == 'stop') createSelectedVideo();
     resetAll();
   }, [recordedChunks])
