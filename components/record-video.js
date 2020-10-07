@@ -145,7 +145,7 @@ function RecordVideo() {
 
   useEffect(() => { uploadSelectedVideo(); }, [selectedVideo])
 
-  useEffect(() => { if (uploadingVideoProgress) (uploadingVideoProgress < 100) ? uploadNotComplete() : uploadComplete(); }, [uploadingVideoProgress])
+  useEffect(() => { (uploadingVideoProgress < 100) ? uploadNotComplete() : uploadComplete(); }, [uploadingVideoProgress])
 
   useEffect(() => { uploadPost(); }, [uploadedVideoSrc])
 
