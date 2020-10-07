@@ -14,7 +14,7 @@ function RecordVideo() {
 
   const startStreamingVideo = stream => {
     console.log(stream, videoRef);
-    if (!videoRef) return;
+    if (!videoRef.current) return;
     videoRef.current.srcObject = stream;
     videoRef.current.onloadedmetadata = () => videoRef.current.play();
     console.log('ok ssv-mid');
@@ -142,7 +142,7 @@ function RecordVideo() {
 
   useEffect(() => { uploadSelectedVideo(); }, [selectedVideo])
 
-  useEffect(() => { (uploadingVideoProgress < 100) ? uploadNotComplete() : uploadComplete(); }, [uploadingVideoProgress])
+  useEffect(() => { if (uploadingVideoProgress) (uploadingVideoProgress < 100) ? uploadNotComplete() : uploadComplete(); }, [uploadingVideoProgress])
 
   useEffect(() => { uploadPost(); }, [uploadedVideoSrc])
 
