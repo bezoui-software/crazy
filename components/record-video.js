@@ -13,7 +13,8 @@ function RecordVideo() {
   const [ frontCam, setFrontCam ] = useState();
 
   const startStreamingVideo = stream => {
-    console.log(stream);
+    console.log(stream, videoRef);
+    if (!videoRef) return;
     videoRef.current.srcObject = stream;
     videoRef.current.onloadedmetadata = () => videoRef.current.play();
     console.log('ok ssv-mid');
