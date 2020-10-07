@@ -53,6 +53,7 @@ function RecordVideo() {
     document.getElementById('abort-video-uploading-btn').classList.remove('enabled-btn');
     document.getElementById('record-video-btn').classList.remove('disabled-btn');
     document.getElementById('flip-camera-btn').classList.remove('hide');
+    document.getElementById('flip-camera-btn').innerHTML = 'hide';
   }
 
   const uploadNotComplete = () => {
@@ -62,6 +63,7 @@ function RecordVideo() {
     document.getElementById('abort-video-uploading-btn').classList.add('enabled-btn');
     document.getElementById('record-video-btn').classList.add('disabled-btn');
     document.getElementById('flip-camera-btn').classList.add('hide');
+        document.getElementById('flip-camera-btn').innerHTML = 'show';
   }
 
   const uploadAborted = () => {
@@ -87,7 +89,6 @@ function RecordVideo() {
   }
 
   useEffect(() => {
-    console.log(recordingState);
     switch(recordingState) {
 
       case 'start':
