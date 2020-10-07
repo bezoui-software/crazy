@@ -121,8 +121,10 @@ function RecordVideo() {
 
   useEffect(() => {
     console.log(recordedChunks);
-    if (recordedChunks && recordingState == 'stop') createSelectedVideo();
-    resetAll();
+    if (recordedChunks && recordingState == 'stop') {
+      createSelectedVideo();
+      resetAll();
+    }
   }, [recordedChunks])
 
   useEffect(() => {
