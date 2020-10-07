@@ -85,11 +85,11 @@ function RecordVideo() {
   }
  
   const recodingComplete = () => {
-    document.getElementById('flip-camera-btn').classList.add('hide');
+    document.getElementById('flip-camera-btn').classList.remove('hide');
   }
   
   const recodingNotComplete = () => {
-    document.getElementById('flip-camera-btn').classList.remove('hide');
+    document.getElementById('flip-camera-btn').classList.add('hide');
   }
   
   const startRecording = () => {
@@ -102,6 +102,10 @@ function RecordVideo() {
   
   const stopRecording = () => {
     mediaRecorder.stop();
+  }
+  
+  const pauseRecording = () => {
+    mediaRecorder.pause();
   }
   
   useEffect(() => {
