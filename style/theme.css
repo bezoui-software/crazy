@@ -17,6 +17,22 @@ main {
   overflow: hidden;
 }
 
+.disabled-btn {
+  cursor: not-allowed !important;
+  filter: brightness(0.9);
+  opacity: 0.9;
+}
+
+.enabled-btn {
+  cursor: pointer !important;
+  filter: brightness(1) !important;
+  opacity: 1;
+}
+
+.hide {
+  display: none !important;
+}
+
 .material-icons {
   user-select: none;
 }
