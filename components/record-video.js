@@ -52,8 +52,6 @@ function RecordVideo() {
     document.getElementById('post-btn').classList.remove('disabled-btn');
     document.getElementById('abort-video-uploading-btn').classList.remove('enabled-btn');
     document.getElementById('record-video-btn').classList.remove('disabled-btn');
-    document.getElementById('flip-camera-btn').classList.remove('hide');
-    document.getElementById('flip-camera-btn').innerHTML = 'hide';
   }
 
   const uploadNotComplete = () => {
@@ -62,8 +60,6 @@ function RecordVideo() {
     document.getElementById('post-btn').classList.add('disabled-btn');
     document.getElementById('abort-video-uploading-btn').classList.add('enabled-btn');
     document.getElementById('record-video-btn').classList.add('disabled-btn');
-    document.getElementById('flip-camera-btn').classList.add('hide');
-        document.getElementById('flip-camera-btn').innerHTML = 'show';
   }
 
   const uploadAborted = () => {
@@ -87,34 +83,57 @@ function RecordVideo() {
     const blob = new Blob(recordedChunks, {type: 'video/mp4'});
     setSelectedVideo(blob);
   }
-
+ 
+  const recodingComplete = () => {
+    document.getElementById('flip-camera-btn').classList.add('hide');
+  }
+  
+  const recodingNotComplete = () => {
+    document.getElementById('flip-camera-btn').classList.remove('hide');
+  }
+  
+  const startRecording = () => {
+    mediaRecorder.start();
+  }
+  
+  const resumeRecording = () => {
+    mediaRecorder.resume();
+  }
+  
+  const stopRecording = () => {
+    mediaRecorder.stop();
+  }
+  
   useEffect(() => {
     switch(recordingState) {
 
       case 'start':
-        if (mediaRecorder.state == 'inactive') mediaRecorder.start();
+        if (mediaRecorder.state == 'inactive') startRecording();
         break;
 
       case 'resume':
-        if (mediaRecorder.state == 'paused') mediaRecorder.resume();
+        if (mediaRecorder.state == 'paused') resumeRecording();
         break;
 
       case 'stop':
-        if (mediaRecorder.state == 'recording' || mediaRecorder.state == 'paused') mediaRecorder.stop();
+        if (mediaRecorder.state == 'recording' || mediaRecorder.state == 'paused') stopRecording();
         break;
 
       case 'pause':
-        if (mediaRecorder.state == 'recording') mediaRecorder.pause();
+        if (mediaRecorder.state == 'recording') pauseRecording();
         break;
 
       case 'reset':
-        if (mediaRecorder.state == 'recording' || mediaRecorder.state == 'paused') mediaRecorder.stop();
+        if (mediaRecorder.state == 'recording' || mediaRecorder.state == 'paused') stopRecording();
         break;
 
     }
-    console.log(recordingState);
   }, [recordingState])
- 
+  
+  useEffect(() => {
+    (recordingState == 'start' || recordingState == 'resume') recodingNotComplete() : recodingComplete();
+  }, [recordingState])
+  
   useEffect(() => {
     if (!mediaRecorder) return;
     let recordedChunks = [];
