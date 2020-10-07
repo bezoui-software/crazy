@@ -135,7 +135,7 @@ function RecordVideo() {
   }, [recordingState])
   
   useEffect(() => {
-    (recordingState == 'start' || recordingState == 'resume') ? recodingNotComplete() : recodingComplete();
+    (recordingState == 'start' || recordingState == 'resume' || recordingState == 'pause') ? recodingNotComplete() : recodingComplete();
   }, [recordingState])
   
   useEffect(() => {
