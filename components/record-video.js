@@ -64,7 +64,10 @@ function RecordVideo() {
     document.getElementById('flip-camera-btn').classList.add('hide');
   }
 
-  const uploadAborted = () => uploadComplete();
+  const uploadAborted = () => {
+    uploadComplete();
+    resetAll();
+  }
 
   const resetRecordedChunks = () => setRecordedChunks();
 
