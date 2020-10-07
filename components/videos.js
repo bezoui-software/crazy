@@ -1,10 +1,16 @@
 function Videos() {
   const [videosData, setVideosData] = useState({});
-  const [VIDEOS_LIMIT, setVideoLimit] = useState(5);
+  const [videosLimit, setVideosLimit] = useState(5);
 
   useEffect(() => {
-    database.ref('posts').orderByChild('timestamp').limitToLast(VIDEOS_LIMIT).on('value', data => setVideosData(data.val()) );
-  }, [])
+    database.ref('posts').orderByChild('timestamp').limitToLast(videosLimit).on('value', data => setVideosData(data.val()) );
+    
+    $('#videos-container').scroll(function() {
+      if($('#videos-container').scrollTop() + $('#videos-container').height() == $(document).height()) {
+        alert("bottom!");
+      }
+    });
+  }, [videosLimit])
 
   return (
     <div id='videos-container'>
