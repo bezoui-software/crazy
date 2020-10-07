@@ -76,10 +76,11 @@ function RecordVideo() {
     resetRecordedChunks();
     resetSelectedVideo();
     setRecordingState('reset');
-    //setUploadingState(false);
+    setUploadingState(false);
   }
 
   const createSelectedVideo = () => {
+    if (!recordedChunks) return;
     const blob = new Blob(recordedChunks, {type: 'video/mp4'});
     setSelectedVideo(blob);
   }
@@ -120,8 +121,10 @@ function RecordVideo() {
   }, [mediaRecorder])
 
   useEffect(() => {
+        console.log('ok rc');
     if (recordedChunks && recordingState == 'stop') createSelectedVideo();
     resetAll();
+        console.log('ok rc');
   }, [recordedChunks])
 
   useEffect(() => {
@@ -149,6 +152,7 @@ function RecordVideo() {
   useEffect(() => {
     const facingMode = frontCam ? 'exact': 'environment';
     navigator.getUserMedia( {video: { width: 1280, height: 720, facingMode: facingMode}, audio: true}, startStreamingVideo, streamingVideoError);
+        console.log('ok fc');
   }, [frontCam])
 
   return (
