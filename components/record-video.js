@@ -73,10 +73,12 @@ function RecordVideo() {
   const resetSelectedVideo = () => setSelectedVideo();
 
   const resetAll = () => {
+    console.log('ok ra-begin');
     resetRecordedChunks();
     resetSelectedVideo();
     setRecordingState('reset');
     setUploadingState(false);
+    console.log('ok ra-end');
   }
 
   const createSelectedVideo = () => {
@@ -121,10 +123,8 @@ function RecordVideo() {
   }, [mediaRecorder])
 
   useEffect(() => {
-        console.log('ok rc');
     if (recordedChunks && recordingState == 'stop') createSelectedVideo();
     resetAll();
-        console.log('ok rc');
   }, [recordedChunks])
 
   useEffect(() => {
