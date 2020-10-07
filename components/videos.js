@@ -1,10 +1,9 @@
-
-
 function Videos() {
   const [videosData, setVideosData] = useState({});
+  const [VIDEOS_LIMIT, setVideoLimit] = useState(5);
 
   useEffect(() => {
-    database.ref('posts').orderByChild('timestamp').on('value', data => setVideosData(data.val()) );
+    database.ref('posts').orderBy('timestamp', 'desc').limit(VIDEOS_LIMIT).on('value', data => setVideosData(data.val()) );
   }, [])
 
   return (
