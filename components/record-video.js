@@ -13,7 +13,6 @@ function RecordVideo() {
   const [ frontCam, setFrontCam ] = useState();
 
   const startStreamingVideo = stream => {
-    if (!videoRef.current) return;
     videoRef.current.srcObject = stream;
     videoRef.current.onloadedmetadata = () => videoRef.current.play();
     setMediaRecorder(new MediaRecorder(stream, {mimeType: 'video/webm'}));
