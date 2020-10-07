@@ -72,7 +72,7 @@ function RecordVideo() {
     resetRecordedChunks();
     resetSelectedVideo();
     setRecordingState('reset');
-    setUploadingState(false);
+    //setUploadingState(false);
   }
 
   const createSelectedVideo = () => {
