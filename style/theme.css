@@ -188,4 +188,14 @@ video:active ~ .video-sidebar-container {
     border-radius: 0;
     border: none;
   }
+  
+  .video-sidebar-toggle-icon:hover {
+    background: transparent;
+    color: white;
+  }
+
+  .video-sidebar-toggle-icon:active {
+    background: white;
+    color: black;
+  }
 }
