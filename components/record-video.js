@@ -111,6 +111,7 @@ function RecordVideo() {
     let recordedChunks = [];
     mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
     mediaRecorder.onstop = () => setRecordedChunks(recordedChunks);
+    console.log('ok');
   }, [mediaRecorder])
 
   useEffect(() => {
