@@ -21,7 +21,7 @@ function RecordVideo() {
   const streamingVideoError = err => { throw new Error(`STREAMING ERROR : ${err}`); }
  
   const flipCamera = () => {
-    if (recordingState == 'reset' || recordingState == 'stop' || !recordingState) setFrontCam(!frontCam);
+    if (recordingState == 'reset' || recordingState == 'stop') setFrontCam(!frontCam);
   }
  
   const uploadPost = () => {
