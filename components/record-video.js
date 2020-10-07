@@ -35,6 +35,7 @@ function RecordVideo() {
     postData.timestamp = firebase.firestore.Timestamp.fromDate(new Date());
     database.ref('posts').push(postData);
     setUploadingState(false);
+    resetAll();
   }
 
   const uploadSelectedVideo = () => {
@@ -70,12 +71,10 @@ function RecordVideo() {
   const resetSelectedVideo = () => setSelectedVideo();
 
   const resetAll = () => {
-    console.log('ok ra-begin');
     resetRecordedChunks();
     resetSelectedVideo();
     setRecordingState('reset');
     setUploadingState(false);
-    console.log('ok ra-end');
   }
 
   const createSelectedVideo = () => {
@@ -120,11 +119,7 @@ function RecordVideo() {
   }, [mediaRecorder])
 
   useEffect(() => {
-    console.log(recordedChunks);
-    if (recordedChunks && recordingState == 'stop') {
-      createSelectedVideo();
-      resetAll();
-    }
+    if (recordedChunks && recordingState == 'stop') createSelectedVideo();
   }, [recordedChunks])
 
   useEffect(() => {
