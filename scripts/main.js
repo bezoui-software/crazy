@@ -1,5 +1,5 @@
 window.oncontextmenu = function(event) {
      event.preventDefault();
-     event.stopPropagation();
+     //event.stopPropagation();
      return false;
 };
