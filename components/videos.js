@@ -1,31 +1,15 @@
 function Videos() {
   const [videosData, setVideosData] = useState({});
   const [videosLimit, setVideosLimit] = useState(5);
-
+  
+  useEffect(() => {
+    $('#videos-container').on('scroll', function() {
+      if (isScrolledIntoView($('#videos-container .video-container:last')) console.log('last');
+    });
+  }, [])
+  
   useEffect(() => {
     database.ref('posts').orderByChild('timestamp').limitToLast(videosLimit).on('value', data => setVideosData(data.val()) );
-    
-      var windowHeight = $(window).height(),
-    gridTop = windowHeight * .1,
-    gridBottom = windowHeight + $('ul li:last').height();
-
-
-  // On each scroll event on window
-  $(window).on('scroll', function() {
-
-    // Interested element caching
-    var $lastElement = $('#videos-container .video-container:last');
-    // Get elemets top
-    var thisTop = $lastElement.offset().top - $(window).scrollTop();
-
-
-    // Check if the element is in the current viewport
-    if (thisTop > gridTop && (thisTop + $lastElement.height()) < gridBottom) {
-      console.log('Yay! In sight');
-    } else {
-      console.log('Still not available');
-    }
-  });
   }, [videosLimit])
 
   return (
