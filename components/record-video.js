@@ -74,10 +74,10 @@ function RecordVideo() {
 
   const resetAll = () => {
     console.log('ok ra-begin');
-    resetRecordedChunks();
-    resetSelectedVideo();
-    setRecordingState('reset');
-    setUploadingState(false);
+    //resetRecordedChunks();
+    //resetSelectedVideo();
+    //setRecordingState('reset');
+    //setUploadingState(false);
     console.log('ok ra-end');
   }
 
