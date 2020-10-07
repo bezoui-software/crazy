@@ -3,7 +3,7 @@ function Videos() {
   const [VIDEOS_LIMIT, setVideoLimit] = useState(5);
 
   useEffect(() => {
-    database.ref('posts').orderByChild('timestamp').limit(VIDEOS_LIMIT).on('value', data => setVideosData(data.val()) );
+    database.ref('posts').orderByChild('timestamp').limitToLast(VIDEOS_LIMIT).on('value', data => setVideosData(data.val()) );
   }, [])
 
   return (
