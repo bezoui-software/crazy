@@ -21,6 +21,7 @@ function RecordVideo() {
   const streamingVideoError = err => { throw new Error(`STREAMING ERROR : ${err}`); }
  
   const flipCamera = () => {
+    console.log(recordingState);
     if (recordingState == 'reset' || recordingState == 'stop') setFrontCam(!frontCam);
   }
  
@@ -62,12 +63,9 @@ function RecordVideo() {
     document.getElementById('flip-camera-btn').classList.add('hide');
   }
 
-  const uploadAborted = () => {
-    uploadComplete();
-  }
+  const uploadAborted = () => uploadComplete();
 
   const resetRecordedChunks = () => setRecordedChunks();
-
 
   const resetSelectedVideo = () => setSelectedVideo();
 
