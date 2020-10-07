@@ -13,13 +13,10 @@ function RecordVideo() {
   const [ frontCam, setFrontCam ] = useState();
 
   const startStreamingVideo = stream => {
-    console.log(stream, videoRef);
     if (!videoRef.current) return;
     videoRef.current.srcObject = stream;
     videoRef.current.onloadedmetadata = () => videoRef.current.play();
-    console.log('ok ssv-mid');
     setMediaRecorder(new MediaRecorder(stream, {mimeType: 'video/webm'}));
-    console.log('ok ssv-end');
   }
 
   const streamingVideoError = err => { throw new Error(`STREAMING ERROR : ${err}`); }
@@ -74,7 +71,7 @@ function RecordVideo() {
 
   const resetAll = () => {
     console.log('ok ra-begin');
-    //resetRecordedChunks();
+    resetRecordedChunks();
     //resetSelectedVideo();
     //setRecordingState('reset');
     //setUploadingState(false);
@@ -115,11 +112,9 @@ function RecordVideo() {
  
   useEffect(() => {
     if (!mediaRecorder) return;
-    console.log('ok');
     let recordedChunks = [];
     mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
     mediaRecorder.onstop = () => setRecordedChunks(recordedChunks);
-    console.log('ok');
   }, [mediaRecorder])
 
   useEffect(() => {
@@ -152,7 +147,6 @@ function RecordVideo() {
   useEffect(() => {
     const facingMode = frontCam ? 'exact': 'environment';
     navigator.getUserMedia( {video: { width: 1280, height: 720, facingMode: facingMode}, audio: true}, startStreamingVideo, streamingVideoError);
-        console.log('ok fc');
   }, [frontCam])
 
   return (
