@@ -74,7 +74,7 @@ function RecordVideo() {
     resetRecordedChunks();
     resetSelectedVideo();
     setRecordingState('reset');
-    setUploadingState(false);
+    //setUploadingState(false);
     console.log('ok ra-end');
   }
 
