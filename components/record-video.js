@@ -13,9 +13,10 @@ function RecordVideo() {
   const [ frontCam, setFrontCam ] = useState();
 
   const startStreamingVideo = stream => {
-    console.log('ok ssv-start');
+    console.log('ok ssv-start', stream);
     videoRef.current.srcObject = stream;
     videoRef.current.onloadedmetadata = () => videoRef.current.play();
+    console.log('ok ssv-mid');
     setMediaRecorder(new MediaRecorder(stream, {mimeType: 'video/webm'}));
     console.log('ok ssv-end');
   }
@@ -145,10 +146,8 @@ function RecordVideo() {
   useEffect(() => { uploadPost(); }, [uploadedVideoSrc])
 
   useEffect(() => {
-    console.log('ok fc-start');
     const facingMode = frontCam ? 'exact': 'environment';
     navigator.getUserMedia( {video: { width: 1280, height: 720, facingMode: facingMode}, audio: true}, startStreamingVideo, streamingVideoError);
-    console.log('ok fc-end');
   }, [frontCam])
 
   return (
