@@ -1,5 +1,3 @@
-let a;
-
 function RecordVideo() {
   const videoRef = useRef();
   const [ recordedChunks, setRecordedChunks ] = useState();
@@ -22,8 +20,9 @@ function RecordVideo() {
 
   const streamingVideoError = err => { throw new Error(`STREAMING ERROR : ${err}`); }
  
-
-  const flipCamera = () => setFrontCam(!frontCam);
+  const flipCamera = () => {
+    if (recordingState == 'reset' || recordingState == 'stop') setFrontCam(!frontCam);
+  }
  
   const uploadPost = () => {
     if (!uploadedVideoSrc) return;
@@ -51,6 +50,7 @@ function RecordVideo() {
     document.getElementById('post-btn').classList.remove('disabled-btn');
     document.getElementById('abort-video-uploading-btn').classList.remove('enabled-btn');
     document.getElementById('record-video-btn').classList.remove('disabled-btn');
+    document.getElementById('flip-camera-btn').classList.remove('hide');
   }
 
   const uploadNotComplete = () => {
@@ -59,6 +59,7 @@ function RecordVideo() {
     document.getElementById('post-btn').classList.add('disabled-btn');
     document.getElementById('abort-video-uploading-btn').classList.add('enabled-btn');
     document.getElementById('record-video-btn').classList.add('disabled-btn');
+    document.getElementById('flip-camera-btn').classList.add('hide');
   }
 
   const uploadAborted = () => {
@@ -190,7 +191,7 @@ function RecordVideoTopBar({ resetAll, flipCamera }) {
     <div id='record-video-top-bar' className='record-video-bar'>
       <Link to='/crazy' id='close-btn' className='material-icons record-video-top-bar-icon'> close </Link>
       <div id='flip-camera-btn' className='material-icons record-video-top-bar-icon' onClick={ flipCamera }> flip_camera_android </div>
-      <div id='flip-camera-btn' className='material-icons record-video-top-bar-icon' onClick={ resetAll }> delete_outline </div>
+      <div id='reset-all-btn' className='material-icons record-video-top-bar-icon' onClick={ resetAll }> delete_outline </div>
     </div>
   )
 }
