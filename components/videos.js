@@ -4,7 +4,7 @@ function Videos() {
   
   useEffect(() => {
     $('#videos-container').on('scroll', function() {
-      if (isScrolledIntoView($('#videos-container .video-container:last')) console.log('last');
+      if (isScrolledIntoView($('#videos-container .video-container:last'))) console.log('last');
     });
   }, [])
   
