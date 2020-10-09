@@ -1,10 +1,13 @@
 function Videos() {
   const [videosData, setVideosData] = useState({});
-  const [videosLimit, setVideosLimit] = useState(5);
+  const [videosInitialLimit, setVideosInitialLimit] = useState(5);
+  const [videosLimit, setVideosLimit] = useState(videosInitialLimit);
+  
+  const increaseVideosLimit = () => setVideosLimit(videosLimit + videosInitialLimit);
   
   useEffect(() => {
     $('#videos-container').on('scroll', function() {
-      if (isScrolledIntoView($('#videos-container .video-container:last'))) setVideosLimit(videosLimit + 5);
+      if (isScrolledIntoView($(`#videos-container .video-container:nth-child( ${videosLimit - 1} )`))) increaseVideosLimit();
     });
   }, [])
   
