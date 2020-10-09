@@ -24,9 +24,7 @@ function Videos() {
 
   return (
     <div id='videos-container'>
-      {
-        renderVideos();
-      }
+        <renderVideos />
     </div>
   );
 }
