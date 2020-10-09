@@ -5,13 +5,6 @@ function Videos() {
   
   const increaseVideosLimit = () => setVideosLimit(videosLimit + videosInitialLimit);
   
-  const renderVideos = () => {
-    Object.keys(videosData).reverse().map(key => {
-      const videoData = videosData[key];
-      return <Video videoData={ videoData } />;
-    })
-  }
-  
   useEffect(() => {
     $('#videos-container').on('scroll', function() {
       if (isScrolledIntoView($(`#videos-container .video-container:nth-child( ${videosLimit - 1} )`))) increaseVideosLimit();
@@ -24,7 +17,12 @@ function Videos() {
 
   return (
     <div id='videos-container'>
-        <renderVideos />
+      {
+        Object.keys(videosData).reverse().map(key => {
+          const videoData = videosData[key];
+          return <Video videoData={ videoData } />;
+        })
+      }
     </div>
   );
 }
