@@ -14,11 +14,12 @@
   padding: 10px;
   border-radius: 50%;
   text-decoration: none;
+  text-shadow: 0 0 1px black;
   transition: 0.3s;
 }
 
 .record-video-top-bar-icon:hover {
-  background: #e4e4e4c7;
+  background: #f1f1f17a;
 }
 
 #video-stream {
