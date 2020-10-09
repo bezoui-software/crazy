@@ -62,6 +62,7 @@ main {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   background: black;
+  overflow: hidden;
 }
 
 .video-footer-container {
