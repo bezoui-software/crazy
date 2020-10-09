@@ -3,7 +3,7 @@
 }
 
 #record-video-container {
-  display: grid;
+  display: flex;
   place-content: center;
   overflow: hidden;
   position: relative;
