@@ -90,6 +90,10 @@
   transform: scale(0.8);
 }
 
+.flip-horizontaly {
+  transform: scaleX(-1);
+}
+
 #uploading-video-progress {
   position: absolute;
   width: 100%;
