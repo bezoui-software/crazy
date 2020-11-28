@@ -1,11 +1,99 @@
 function RecordVideo() {
-  const videoRef = useRef();
-  const [ recordedChunks, setRecordedChunks ] = useState();
-  const [ mediaRecorder, setMediaRecorder ] = useState();
-  const [ selectedVideo, setSelectedVideo ] = useState();
   const [ uploadedVideoSrc, setUploadedVideoSrc ] = useState();
   const [ uploadingState, setUploadingState ] = useState();
   const [ recordingState, setRecordingState ] = useState();
+  const [ selectedVideo, setSelectedVideo ] = useState();
+  const [ recordedChunks, setRecordedChunks ] = useState();
+
+  const resetRecordedChunks = () => setRecordedChunks();
+
+  const resetSelectedVideo = () => setSelectedVideo();
+
+  const resetAll = () => {
+    resetRecordedChunks();
+    resetSelectedVideo();
+    setRecordingState('reset');
+    setUploadingState(false);
+    setUploadedVideoSrc(null);
+  }
+
+  return (
+     <div id='record-video'>
+     {uploadedVideoSrc ? 
+       (<VideoDetailsContainer 
+         uploadedVideoSrc={ uploadedVideoSrc } 
+         setUploadedVideoSrc={ setUploadedVideoSrc } 
+         uploadingState={ uploadingState }
+         setUploadingState={ setUploadingState }    
+         resetAll={ resetAll }   
+       />) : 
+      (<RecordVideoContainer 
+         uploadedVideoSrc={ uploadedVideoSrc } 
+         setUploadedVideoSrc={ setUploadedVideoSrc } 
+         uploadingState={ uploadingState }
+         setUploadingState={ setUploadingState }
+         recordingState={ recordingState }
+         setRecordingState={ setRecordingState }
+         selectedVideo={ selectedVideo }
+         setSelectedVideo={ setSelectedVideo } 
+         recordedChunks={ recordedChunks }
+         setRecordedChunks={ setRecordedChunks }
+         resetAll={ resetAll }
+       />)
+     }
+    </div>
+  )
+}
+
+function VideoDetailsContainer({ uploadedVideoSrc, setUploadedVideoSrc, uploadingState, setUploadingState, resetAll }) {
+  const [description, setDescription] = useState('');
+  const inputs = { description: setDescription };
+
+  const uploadPost = () => {
+    if (!uploadedVideoSrc) return;
+    const postData = {};
+    postData.userName = 'walidbez';
+    postData.description = description;
+    postData.musicName = 'ORIGINAL SONG FROM @walidbez';
+    postData.videoSrc = uploadedVideoSrc;
+    postData.timestamp = firebase.firestore.Timestamp.fromDate(new Date());
+    database.ref('posts').push(postData);
+    setUploadingState(false);
+    resetAll();
+  }
+ 
+  const updateInput = e => { 
+    const key = e.target.id.replace('-input', '');
+    const setFunc = inputs[key];
+    if (setFunc) setFunc(e.target.value);
+  }
+
+  const cancelPosting = () => {
+    const storageRef = firebase.storage().refFromURL(uploadedVideoSrc); 
+
+    storageRef.delete().then(function() {
+      resetAll();
+    }).catch(function(error) {
+      console.error('REMOVING VIDEO ERROR ', error);
+    });
+  } 
+
+  return (
+     <div id='video-details-container' className='record-video-all-container'>
+       <div id='inputs'>
+         <Input label='Video Description' placeholder='#crazy my best video #lets_be_crazy' id='description-input' onChange={ updateInput }/>
+       </div>
+       <div id='buttons'>
+         <button id='cancel-posting-btn' className='material-icons' onClick={ cancelPosting }> delete </button>
+         <button id='send-full-post-btn' className='material-icons' onClick={ uploadPost }> send </button>
+       </div>
+     </div>
+  )
+}
+
+function RecordVideoContainer({ uploadedVideoSrc, setUploadedVideoSrc, uploadingState, setUploadingState, recordingState, setRecordingState, selectedVideo, setSelectedVideo, recordedChunks, setRecordedChunks, resetAll }) {
+  const videoRef = useRef();
+  const [ mediaRecorder, setMediaRecorder ] = useState();
   const [ uploadingVideoProgress, setUploadingVideoProgress ] = useState();
   const [ uploadingVideoProgressMeterAnimationName, setUploadingVideoProgressMeterAnimationName ] = useState();
   const [ uploadTask, setUploadTask ] = useState();
@@ -24,19 +112,6 @@ function RecordVideo() {
     if (recordingState == 'reset' || recordingState == 'stop' || !recordingState) setFrontCam(!frontCam);
   }
  
-  const uploadPost = () => {
-    if (!uploadedVideoSrc) return;
-    const postData = {};
-    postData.userName = 'walidbez';
-    postData.description = prompt('VIDEO DESCRIPTION:');
-    postData.musicName = 'ORIGINAL SONG FROM @walidbez';
-    postData.videoSrc = uploadedVideoSrc;
-    postData.timestamp = firebase.firestore.Timestamp.fromDate(new Date());
-    database.ref('posts').push(postData);
-    setUploadingState(false);
-    resetAll();
-  }
-
   const uploadSelectedVideo = () => {
     if (!selectedVideo || uploadingState) return;
     const id =  randomID();
@@ -64,17 +139,6 @@ function RecordVideo() {
   const uploadAborted = () => {
     uploadComplete();
     resetAll();
-  }
-
-  const resetRecordedChunks = () => setRecordedChunks();
-
-  const resetSelectedVideo = () => setSelectedVideo();
-
-  const resetAll = () => {
-    resetRecordedChunks();
-    resetSelectedVideo();
-    setRecordingState('reset');
-    setUploadingState(false);
   }
 
   const createSelectedVideo = () => {
@@ -108,7 +172,7 @@ function RecordVideo() {
   }
   
   useEffect(() => {
-    console.log(recordingState);
+    if (!mediaRecorder) return;
     switch(recordingState) {
 
       case 'start':
@@ -169,15 +233,13 @@ function RecordVideo() {
 
   useEffect(() => { (uploadingVideoProgress < 100) ? uploadNotComplete() : uploadComplete(); }, [uploadingVideoProgress])
 
-  useEffect(() => { uploadPost(); }, [uploadedVideoSrc])
-
   useEffect(() => {
     const facingMode = frontCam ? 'exact': 'environment';
     navigator.getUserMedia( {video: { width: 1280, height: 720, facingMode: facingMode}, audio: true}, startStreamingVideo, streamingVideoError);
   }, [frontCam])
 
   return (
-    <div id='record-video-container'>
+    <div id='record-video-container' className='record-video-all-container'>
       <RecordVideoTopBar resetAll={ resetAll } flipCamera={ flipCamera }/>
       <RecordVideoBottomBar recordingState={ recordingState } setRecordingState={ setRecordingState } uploadTask={ uploadTask } uploadingVideoProgress={ uploadingVideoProgress } uploadingState={ uploadingState } />
       <video muted id='video-stream' ref={ videoRef } />
@@ -207,7 +269,7 @@ function RecordVideoBottomBar({ recordingState, setRecordingState, uploadTask, u
   }
 
   return (
-    <div id='record-video-bottom-bar' className='record-video-bar'>
+    <div id='bottom-bar' className='record-video-bar'>
       <AbortVideoUploading abortVideoUploading={ abortVideoUploading } />
       <RecordButton startRecording={ startRecording } pauseRecording={ pauseRecording } />
       <PostButton stopRecording={ stopRecording } />
@@ -221,24 +283,24 @@ function RecordVideoTopBar({ resetAll, flipCamera }) {
   }
   
   return (
-    <div id='record-video-top-bar' className='record-video-bar'>
-      <Link to='/crazy' id='close-btn' className='material-icons record-video-top-bar-icon'> close </Link>
-      <div id='flip-camera-btn' className='material-icons record-video-top-bar-icon' onClick={ flipCamera }> flip_camera_android </div>
-    <div id='reset-all-btn' className='material-icons record-video-top-bar-icon' onClick={ flipImageHorizontaly }> compare </div>
-      <div id='reset-all-btn' className='material-icons record-video-top-bar-icon' onClick={ resetAll }> delete_outline </div>
+    <div id='top-bar' className='record-video-bar'>
+      <Link to='/crazy' id='close-btn' className='material-icons top-bar-icon'> close </Link>
+      <div id='flip-camera-btn' className='material-icons top-bar-icon' onClick={ flipCamera }> flip_camera_android </div>
+      <div id='reset-all-btn' className='material-icons top-bar-icon' onClick={ flipImageHorizontaly }> compare </div>
+      <div id='reset-all-btn' className='material-icons top-bar-icon' onClick={ resetAll }> delete_outline </div>
     </div>
   )
 }
 
 function PostButton({ stopRecording }) {
   return (
-    <div id='post-btn' className='material-icons icon-btn disabled-btn' onClick={ stopRecording }> send </div>
+    <div id='post-btn' className='material-icons bottom-bar-icon disabled-btn' onClick={ stopRecording }> send </div>
   );
 }
 
 function AbortVideoUploading({ abortVideoUploading }) {
   return (
-    <div id='abort-video-uploading-btn' className='material-icons icon-btn disabled-btn' onClick={ abortVideoUploading }> close </div>
+    <div id='abort-video-uploading-btn' className='material-icons bottom-bar-icon disabled-btn' onClick={ abortVideoUploading }> close </div>
   );
 }
 
@@ -253,6 +315,15 @@ function RecordButton({ startRecording, pauseRecording }) {
 function VideoUploadingProgressMeter({ progress, animationName }) {
   return (
     <meter style={{ animation: animationName + ' 1s ease forwards' }} id='uploading-video-progress' max='100' value={ progress }></meter>
+  )
+}
+
+function Input({ label, placeholder, onChange, id }) {
+  return (
+    <div className='input-container'>
+      <label> { label } </label>
+      <input id={ id } placeholder={ placeholder }  onChange={ onChange } />
+    </div>
   )
 }
 
