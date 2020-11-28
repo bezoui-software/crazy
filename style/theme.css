@@ -189,7 +189,7 @@ video:active ~ .video-sidebar-container {
 }
 
 @media only screen and (max-width: 800px) {
-  #videos-container, #record-video-container {
+  #videos-container, #record-video-container, #record-video {
     width: 100%;
     height: 100%;
     border-radius: 0;
