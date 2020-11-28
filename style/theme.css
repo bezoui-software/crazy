@@ -2,6 +2,10 @@ html {
   scroll-snap-type: y mandatory;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -37,10 +41,10 @@ main {
   user-select: none;
 }
 
-#videos-container, #record-video-container {
+#videos-container, #record-video {
   position: relative;
   width: 35%;
-  height: 90%;
+  height: 85%;
   background: black;
   border-radius: 30px;
   border: 1px solid grey;
@@ -49,6 +53,7 @@ main {
 #videos-container {
   overflow: scroll;
   scroll-snap-type: y mandatory;
+  text-shadow: 0 0 4px #0000007a;
 }
 
 #videos-container::-webkit-scrollbar {
@@ -113,6 +118,7 @@ main {
   background: transparent;
   color: white;
   user-select: none;
+  text-shadow: 0 0 2px #000000c2;
   transition: 0.3s;
 }
 
